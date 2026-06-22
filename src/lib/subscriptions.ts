@@ -1,7 +1,7 @@
 import { supabase } from './supabase'
 
 export interface UserSubscription {
-  user_id: string
+  user_id: string | { [key: string]: any }
   status: 'free' | 'active' | 'cancelled'
   plan: 'freemium' | 'premium'
   lemon_squeezy_order_id?: string

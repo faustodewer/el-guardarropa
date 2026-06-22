@@ -27,7 +27,7 @@ interface LemonWebhookPayload {
     attributes: {
       status: string
       customer_email: string
-      custom: {
+      custom?: {
         user_id?: string
         email?: string
       }
