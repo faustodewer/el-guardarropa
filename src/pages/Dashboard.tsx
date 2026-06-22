@@ -3,7 +3,9 @@ import { signOut } from '../lib/auth'
 import { PhotoUpload } from '../components/PhotoUpload'
 import { GarmentForm } from '../components/GarmentForm'
 import { GarmentList } from '../components/GarmentList'
+import { PricingModal } from '../components/PricingModal'
 import { supabase } from '../lib/supabase'
+import { isPremiumUser } from '../lib/subscriptions'
 import './Dashboard.css'
 
 interface DashboardProps {
@@ -15,12 +17,30 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
   const [garments, setGarments] = useState<any[]>([])
   const [loading, setLoading] = useState(true)
   const [showForm, setShowForm] = useState(false)
+  const [showPricingModal, setShowPricingModal] = useState(false)
   const [count, setCount] = useState(0)
-  const limit = 25
+  const [isPremium, setIsPremium] = useState(false)
+  const limit = isPremium ? Infinity : 25
 
   useEffect(() => {
+    checkPremium()
     loadGarments()
+
+    // Check if returning from checkout
+    if (sessionStorage.getItem('returnedFromCheckout')) {
+      sessionStorage.removeItem('returnedFromCheckout')
+      // Re-check premium status after a short delay (webhook might still be processing)
+      const timer = setTimeout(() => {
+        checkPremium()
+      }, 3000)
+      return () => clearTimeout(timer)
+    }
   }, [user])
+
+  const checkPremium = async () => {
+    const premium = await isPremiumUser(user.id)
+    setIsPremium(premium)
+  }
 
   const loadGarments = async () => {
     try {
@@ -84,10 +104,15 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
           <div className="upgrade-notice">
             <h3>Límite de prendas alcanzado</h3>
             <p>Actualiza a premium para agregar más prendas</p>
+            <button onClick={() => setShowPricingModal(true)} className="upgrade-link">
+              Ver planes premium →
+            </button>
           </div>
         )}
 
         {showForm && <GarmentForm user={user} onSubmit={handleGarmentAdded} onCancel={() => setShowForm(false)} />}
+
+        {showPricingModal && <PricingModal user={user} onClose={() => setShowPricingModal(false)} />}
 
         <section className="garments-section">
           <h2>Mis Prendas</h2>

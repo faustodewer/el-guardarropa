@@ -4,11 +4,12 @@ import { Auth } from './pages/Auth'
 import { Dashboard } from './pages/Dashboard'
 import { Privacy } from './pages/Privacy'
 import { Terms } from './pages/Terms'
+import { Pricing } from './pages/Pricing'
 import { useAuth } from './lib/useAuth'
 import './App.css'
 import './pages/Legal.css'
 
-type Page = 'home' | 'privacy' | 'terms' | 'dashboard'
+type Page = 'home' | 'privacy' | 'terms' | 'pricing' | 'dashboard'
 
 function App() {
   const { user, loading } = useAuth()
@@ -28,6 +29,8 @@ function App() {
         return <Privacy />
       case 'terms':
         return <Terms />
+      case 'pricing':
+        return <Pricing />
       case 'dashboard':
         return user ? (
           <Dashboard user={user} onLogout={() => setPage('home')} />
@@ -50,7 +53,7 @@ function App() {
   return (
     <div className="app">
       {renderPage()}
-      {page !== 'dashboard' && <GDPRBanner />}
+      {page !== 'dashboard' && <GDPRBanner onNavigate={(p) => setPage(p as Page)} />}
     </div>
   )
 }

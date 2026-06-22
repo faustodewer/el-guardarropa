@@ -1,7 +1,11 @@
 import { useState, useEffect } from 'react'
 import './GDPRBanner.css'
 
-export function GDPRBanner() {
+interface GDPRBannerProps {
+  onNavigate?: (page: string) => void
+}
+
+export function GDPRBanner({ onNavigate }: GDPRBannerProps) {
   const [showBanner, setShowBanner] = useState(false)
 
   useEffect(() => {
@@ -26,8 +30,18 @@ export function GDPRBanner() {
       <div className="gdpr-content">
         <p>
           Usamos cookies para mejorar tu experiencia. Al continuar, aceptas nuestra{' '}
-          <a href="/privacy">Política de Privacidad</a> y{' '}
-          <a href="/terms">Términos de Servicio</a>.
+          {onNavigate ? (
+            <a href="#" onClick={() => onNavigate('privacy')}>Política de Privacidad</a>
+          ) : (
+            <a href="/privacy">Política de Privacidad</a>
+          )}
+          {' '}y{' '}
+          {onNavigate ? (
+            <a href="#" onClick={() => onNavigate('terms')}>Términos de Servicio</a>
+          ) : (
+            <a href="/terms">Términos de Servicio</a>
+          )}
+          .
         </p>
         <button onClick={handleAccept} className="gdpr-accept">
           Aceptar
