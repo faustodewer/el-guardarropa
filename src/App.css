@@ -1,0 +1,66 @@
+.app {
+  background: #FAF8F3;
+  min-height: 100vh;
+}
+
+.header {
+  background: linear-gradient(135deg, #FAF8F3 0%, #F5F1E8 100%);
+}
+
+.main {
+  padding: 40px 20px;
+}
+
+.auth-section {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 24px;
+  padding: 60px 20px;
+}
+
+.auth-section button {
+  padding: 14px 40px;
+  font-size: 16px;
+  min-width: 200px;
+}
+
+.dashboard {
+  display: grid;
+  gap: 24px;
+}
+
+.dashboard button {
+  align-self: center;
+  min-width: 200px;
+}
+
+.footer {
+  margin-top: auto;
+  background: #F5F1E8;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+}
+
+.footer-nav {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  justify-content: center;
+}
+
+.footer-link {
+  background: none;
+  border: none;
+  color: #B5A892;
+  cursor: pointer;
+  font-size: 12px;
+  text-decoration: underline;
+  padding: 0;
+}
+
+.footer-link:hover {
+  color: #3D3D3A;
+}

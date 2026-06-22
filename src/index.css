@@ -1,0 +1,141 @@
+* {
+  box-sizing: border-box;
+  margin: 0;
+  -webkit-tap-highlight-color: transparent;
+}
+
+html, body {
+  background: #FAF8F3;
+  font-family: 'Jost', -apple-system, sans-serif;
+  color: #3D3D3A;
+}
+
+::-webkit-scrollbar {
+  width: 0;
+}
+
+input, select, textarea {
+  font-family: 'Jost', sans-serif;
+  font-size: 15px;
+  width: 100%;
+  padding: 11px 13px;
+  border-radius: 10px;
+  border: 1px solid #E2D8C4;
+  background: #FFFAF0;
+  color: #3D3D3A;
+  outline: none;
+  -webkit-appearance: none;
+}
+
+input:focus, select:focus, textarea:focus {
+  border-color: #B5A892;
+}
+
+label {
+  font-family: 'Jost', sans-serif;
+  font-size: 12px;
+  letter-spacing: 0.5px;
+  text-transform: uppercase;
+  color: #B5A892;
+  display: block;
+  margin-bottom: 6px;
+}
+
+button {
+  font-family: 'Jost', sans-serif;
+  padding: 12px 24px;
+  border: 1px solid #B5A892;
+  border-radius: 10px;
+  background: #FAF8F3;
+  color: #3D3D3A;
+  cursor: pointer;
+  font-size: 15px;
+  transition: all 0.3s ease;
+}
+
+button:hover {
+  background: #E2D8C4;
+  border-color: #8B7D6B;
+}
+
+#root {
+  min-height: 100vh;
+}
+
+.loading {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  color: #B5A892;
+  font-family: 'Jost', sans-serif;
+  font-size: 18px;
+}
+
+.app {
+  display: flex;
+  flex-direction: column;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.header {
+  text-align: center;
+  padding: 40px 20px;
+  border-bottom: 1px solid #E2D8C4;
+}
+
+.header h1 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 48px;
+  font-weight: 500;
+  margin-bottom: 8px;
+  color: #3D3D3A;
+}
+
+.header p {
+  font-size: 14px;
+  color: #B5A892;
+  letter-spacing: 2px;
+}
+
+.main {
+  flex: 1;
+  max-width: 1200px;
+  margin: 0 auto;
+  width: 100%;
+  padding: 40px 20px;
+}
+
+.auth-section, .dashboard {
+  text-align: center;
+}
+
+.auth-section h2, .dashboard h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 32px;
+  margin-bottom: 24px;
+  color: #3D3D3A;
+}
+
+.footer {
+  text-align: center;
+  padding: 20px;
+  border-top: 1px solid #E2D8C4;
+  color: #B5A892;
+  font-size: 12px;
+}
+
+@media (max-width: 768px) {
+  .header h1 {
+    font-size: 36px;
+  }
+
+  .header p {
+    font-size: 12px;
+  }
+
+  .main {
+    padding: 20px 10px;
+  }
+}
