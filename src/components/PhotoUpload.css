@@ -1,0 +1,149 @@
+.photo-upload {
+  background: white;
+  border: 1px solid var(--color-border);
+  border-radius: 8px;
+  padding: 2rem;
+  margin-bottom: 2rem;
+}
+
+.photo-upload h2 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  margin: 0 0 1.5rem 0;
+  color: var(--color-text);
+}
+
+.upload-error {
+  background: #fee;
+  color: #c33;
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  border-left: 3px solid #c33;
+}
+
+.upload-area {
+  position: relative;
+  border: 2px dashed var(--color-accent);
+  border-radius: 8px;
+  padding: 3rem 1rem;
+  text-align: center;
+  cursor: pointer;
+  transition: background 0.2s;
+}
+
+.upload-area:hover {
+  background: rgba(181, 168, 146, 0.05);
+}
+
+#photo-input {
+  display: none;
+}
+
+.upload-label {
+  display: block;
+  font-size: 1.1rem;
+  color: var(--color-text);
+  cursor: pointer;
+  user-select: none;
+}
+
+.upload-preview {
+  text-align: center;
+}
+
+.upload-preview img {
+  max-width: 100%;
+  max-height: 300px;
+  border-radius: 8px;
+  margin-bottom: 1.5rem;
+  border: 1px solid var(--color-border);
+}
+
+.ai-tags {
+  margin-top: 1.5rem;
+}
+
+.ai-result {
+  background: #f0f8f0;
+  color: #2d7d2d;
+  padding: 1rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  border-left: 3px solid #2d7d2d;
+  font-size: 0.95rem;
+}
+
+.analyze-btn,
+.upload-btn,
+.cancel-btn {
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: opacity 0.2s;
+  font-weight: 500;
+}
+
+.analyze-btn {
+  background: var(--color-accent);
+  color: white;
+  display: block;
+  width: 100%;
+}
+
+.analyze-btn:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.analyze-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.upload-btn {
+  background: var(--color-text);
+  color: white;
+  display: inline-block;
+  margin-right: 0.5rem;
+}
+
+.upload-btn:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.upload-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.cancel-btn {
+  background: var(--color-border);
+  color: var(--color-text);
+  display: inline-block;
+}
+
+.cancel-btn:hover:not(:disabled) {
+  opacity: 0.8;
+}
+
+.cancel-btn:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .photo-upload {
+    padding: 1.5rem;
+  }
+
+  .upload-area {
+    padding: 2rem 1rem;
+  }
+
+  .upload-preview img {
+    max-height: 250px;
+  }
+}

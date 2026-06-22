@@ -3,7 +3,12 @@
     "allow": [
       "Bash(dir \"C:\\\\Users\\\\faust\\\\Desktop\\\\Proyecto app ropa\" -Force)",
       "PowerShell(node --version)",
-      "PowerShell(npm --version)"
+      "PowerShell(npm --version)",
+      "mcp__Claude_in_Chrome__tabs_context_mcp",
+      "mcp__Claude_in_Chrome__browser_batch",
+      "mcp__Claude_in_Chrome__computer",
+      "mcp__Claude_in_Chrome__javascript_tool",
+      "PowerShell($env:NETLIFY_AUTH_TOKEN = \"nfp_ydfJDMmXZSEchrwdZq7eSThfNL8tgbnSf539\"; cd \"C:\\\\Users\\\\faust\\\\Desktop\\\\Proyecto app ropa\"; netlify link --id el-guardarropa)"
     ]
   }
 }

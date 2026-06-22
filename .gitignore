@@ -30,3 +30,6 @@ dist-ssr
 
 # Build outputs
 _backup_old_html
+
+# Local Netlify folder
+.netlify

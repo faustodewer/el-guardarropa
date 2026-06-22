@@ -1,0 +1,117 @@
+.garment-form-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
+}
+
+.garment-form {
+  background: white;
+  border-radius: 8px;
+  padding: 2rem;
+  max-width: 400px;
+  width: 100%;
+  box-shadow: 0 10px 25px rgba(0, 0, 0, 0.1);
+}
+
+.garment-form h3 {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.5rem;
+  margin: 0 0 1.5rem 0;
+  color: var(--color-text);
+}
+
+.form-error {
+  background: #fee;
+  color: #c33;
+  padding: 0.75rem 1rem;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+  font-size: 0.9rem;
+  border-left: 3px solid #c33;
+}
+
+.garment-form input,
+.garment-form select {
+  width: 100%;
+  padding: 0.75rem 1rem;
+  margin-bottom: 1rem;
+  border: 1px solid var(--color-border);
+  border-radius: 4px;
+  font-family: 'Jost', sans-serif;
+  font-size: 1rem;
+  box-sizing: border-box;
+}
+
+.garment-form input:focus,
+.garment-form select:focus {
+  outline: none;
+  border-color: var(--color-accent);
+}
+
+.garment-form input:disabled,
+.garment-form select:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+.form-buttons {
+  display: flex;
+  gap: 1rem;
+  margin-top: 1.5rem;
+}
+
+.garment-form button {
+  flex: 1;
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 4px;
+  font-size: 1rem;
+  font-weight: 500;
+  cursor: pointer;
+  transition: opacity 0.2s;
+}
+
+.garment-form button[type='submit'] {
+  background: var(--color-text);
+  color: white;
+}
+
+.garment-form button[type='submit']:hover:not(:disabled) {
+  opacity: 0.9;
+}
+
+.garment-form button.cancel {
+  background: var(--color-border);
+  color: var(--color-text);
+}
+
+.garment-form button.cancel:hover:not(:disabled) {
+  opacity: 0.8;
+}
+
+.garment-form button:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+}
+
+@media (max-width: 768px) {
+  .garment-form-overlay {
+    padding: 1rem;
+  }
+
+  .garment-form {
+    padding: 1.5rem;
+  }
+
+  .form-buttons {
+    flex-direction: column;
+  }
+}

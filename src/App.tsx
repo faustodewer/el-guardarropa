@@ -1,21 +1,26 @@
-import { useState, useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import { GDPRBanner } from './components/GDPRBanner'
+import { Auth } from './pages/Auth'
+import { Dashboard } from './pages/Dashboard'
 import { Privacy } from './pages/Privacy'
 import { Terms } from './pages/Terms'
+import { useAuth } from './lib/useAuth'
 import './App.css'
 import './pages/Legal.css'
 
-type Page = 'home' | 'privacy' | 'terms'
+type Page = 'home' | 'privacy' | 'terms' | 'dashboard'
 
 function App() {
+  const { user, loading } = useAuth()
   const [page, setPage] = useState<Page>('home')
-  const [user] = useState<any>(null)
-  const [loading, setLoading] = useState(true)
 
   useEffect(() => {
-    // TODO: Initialize Supabase auth
-    setLoading(false)
-  }, [])
+    if (user && page === 'home') {
+      setPage('dashboard')
+    } else if (!user && page === 'dashboard') {
+      setPage('home')
+    }
+  }, [user, page])
 
   const renderPage = () => {
     switch (page) {
@@ -23,42 +28,17 @@ function App() {
         return <Privacy />
       case 'terms':
         return <Terms />
+      case 'dashboard':
+        return user ? (
+          <Dashboard user={user} onLogout={() => setPage('home')} />
+        ) : (
+          <Auth onAuthSuccess={() => setPage('dashboard')} />
+        )
       default:
-        return (
-          <>
-            <header className="header">
-              <h1>El Guardarropa</h1>
-              <p>Old Money Wardrobe</p>
-            </header>
-
-            <main className="main">
-              {!user ? (
-                <div className="auth-section">
-                  <h2>Bienvenido</h2>
-                  <p>Organiza tu armario con estilo Old Money</p>
-                  <button>Iniciar sesión</button>
-                </div>
-              ) : (
-                <div className="dashboard">
-                  <h2>Tu Armario</h2>
-                  <p>Bienvenido de nuevo</p>
-                </div>
-              )}
-            </main>
-
-            <footer className="footer">
-              <p>&copy; 2026 El Guardarropa</p>
-              <nav className="footer-nav">
-                <button onClick={() => setPage('privacy')} className="footer-link">
-                  Privacidad
-                </button>
-                <span> • </span>
-                <button onClick={() => setPage('terms')} className="footer-link">
-                  Términos
-                </button>
-              </nav>
-            </footer>
-          </>
+        return user ? (
+          <Dashboard user={user} onLogout={() => setPage('home')} />
+        ) : (
+          <Auth onAuthSuccess={() => setPage('dashboard')} />
         )
     }
   }
@@ -70,7 +50,7 @@ function App() {
   return (
     <div className="app">
       {renderPage()}
-      <GDPRBanner />
+      {page !== 'dashboard' && <GDPRBanner />}
     </div>
   )
 }
