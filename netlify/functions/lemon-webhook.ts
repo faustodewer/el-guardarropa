@@ -61,6 +61,15 @@ const handler: Handler = async (event) => {
     const order = payload.data
     const userId = order.attributes.custom?.user_id
 
+    if (!userId) {
+      console.error('Webhook received without user_id', { eventName, orderId: order.id })
+      // Return 400 so Lemon Squeezy retries
+      return {
+        statusCode: 400,
+        body: 'Missing user_id in webhook payload',
+      }
+    }
+
     // Log webhook
     await supabase.from('payment_webhooks').insert({
       event_type: eventName,
@@ -69,14 +78,6 @@ const handler: Handler = async (event) => {
       payload: payload,
       processed: false,
     })
-
-    if (!userId) {
-      console.warn('Webhook received but no user_id found')
-      return {
-        statusCode: 200,
-        body: 'Webhook logged but no user_id',
-      }
-    }
 
     // Handle order events
     if (eventName === 'order_created' || eventName === 'order_completed') {

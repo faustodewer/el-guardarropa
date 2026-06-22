@@ -36,8 +36,28 @@ export function PhotoUpload({ user, onPhotoAdded }: PhotoUploadProps) {
   }
 
   const processFile = (selected: File) => {
-    if (!selected.type.startsWith('image/')) {
-      setError('Por favor selecciona una imagen')
+    const MAX_FILE_SIZE = 5 * 1024 * 1024 // 5MB
+    const ALLOWED_TYPES = ['image/jpeg', 'image/png', 'image/webp']
+    const MIN_DELAY_BETWEEN_UPLOADS = 5000 // 5 seconds
+
+    // Validar tipo
+    if (!ALLOWED_TYPES.includes(selected.type)) {
+      setError('Solo se permiten JPEG, PNG, WebP')
+      return
+    }
+
+    // Validar tamaño
+    if (selected.size > MAX_FILE_SIZE) {
+      const sizeMB = (selected.size / 1024 / 1024).toFixed(1)
+      setError(`Imagen muy grande. Máximo 5MB (actual: ${sizeMB}MB)`)
+      return
+    }
+
+    // Rate limiting
+    const lastUploadTime = parseInt(localStorage.getItem('last_upload_time') || '0')
+    if (Date.now() - lastUploadTime < MIN_DELAY_BETWEEN_UPLOADS) {
+      const waitSeconds = Math.ceil((MIN_DELAY_BETWEEN_UPLOADS - (Date.now() - lastUploadTime)) / 1000)
+      setError(`Espera ${waitSeconds}s antes de subir otra foto`)
       return
     }
 
@@ -48,6 +68,7 @@ export function PhotoUpload({ user, onPhotoAdded }: PhotoUploadProps) {
     const reader = new FileReader()
     reader.onload = (e) => {
       setPreview(e.target?.result as string)
+      localStorage.setItem('last_upload_time', String(Date.now()))
     }
     reader.readAsDataURL(selected)
   }

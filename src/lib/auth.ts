@@ -1,6 +1,25 @@
 import { supabase } from './supabase'
 
+export function validatePassword(password: string): { valid: boolean; errors: string[] } {
+  const errors: string[] = []
+
+  if (password.length < 12) errors.push('Mínimo 12 caracteres')
+  if (!/[A-Z]/.test(password)) errors.push('Requiere mayúscula')
+  if (!/[a-z]/.test(password)) errors.push('Requiere minúscula')
+  if (!/\d/.test(password)) errors.push('Requiere número')
+  if (!/[!@#$%^&*()_+\-=\[\]{};':"\\|,.<>\/?]/.test(password)) {
+    errors.push('Requiere símbolo especial (!@#$%^&* etc)')
+  }
+
+  return { valid: errors.length === 0, errors }
+}
+
 export async function signUp(email: string, password: string) {
+  const validation = validatePassword(password)
+  if (!validation.valid) {
+    throw new Error(validation.errors.join('. '))
+  }
+
   const { data, error } = await supabase.auth.signUp({
     email,
     password,

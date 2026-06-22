@@ -11,7 +11,9 @@ export function GarmentList({ garments, onGarmentsChange }: GarmentListProps) {
     if (!confirm('¿Eliminar esta prenda?')) return
 
     try {
-      await supabase.from('garments').delete().eq('id', id)
+      await supabase.from('garments')
+        .update({ deleted_at: new Date().toISOString() })
+        .eq('id', id)
       onGarmentsChange()
     } catch (err) {
       console.error('Error deleting:', err)

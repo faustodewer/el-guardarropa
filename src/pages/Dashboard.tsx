@@ -29,10 +29,24 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
     // Check if returning from checkout
     if (sessionStorage.getItem('returnedFromCheckout')) {
       sessionStorage.removeItem('returnedFromCheckout')
-      // Re-check premium status after a short delay (webhook might still be processing)
-      const timer = setTimeout(() => {
-        checkPremium()
-      }, 3000)
+
+      // Poll for premium status with exponential backoff
+      let retries = 0
+      const maxRetries = 30
+
+      const pollPremium = async () => {
+        const premium = await isPremiumUser(user.id)
+        if (!premium && retries < maxRetries) {
+          retries++
+          const delay = Math.min(1000 * (2 ** (retries - 1)), 30000)
+          setTimeout(pollPremium, delay)
+        } else if (premium) {
+          checkPremium()
+        }
+      }
+
+      // Start polling after 1 second (webhook needs time to process)
+      const timer = setTimeout(pollPremium, 1000)
       return () => clearTimeout(timer)
     }
   }, [user])
@@ -48,6 +62,7 @@ export function Dashboard({ user, onLogout }: DashboardProps) {
         .from('garments')
         .select('*')
         .eq('user_id', user.id)
+        .is('deleted_at', null)
         .order('created_at', { ascending: false })
 
       if (error) throw error
