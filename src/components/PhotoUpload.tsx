@@ -18,7 +18,24 @@ export function PhotoUpload({ user, onPhotoAdded }: PhotoUploadProps) {
   const handleFileSelect = (e: React.ChangeEvent<HTMLInputElement>) => {
     const selected = e.target.files?.[0]
     if (!selected) return
+    processFile(selected)
+  }
 
+  const handleDrop = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault()
+    e.stopPropagation()
+
+    const selected = e.dataTransfer.files?.[0]
+    if (!selected) return
+    processFile(selected)
+  }
+
+  const handleDragOver = (e: React.DragEvent<HTMLDivElement>) => {
+    e.preventDefault()
+    e.stopPropagation()
+  }
+
+  const processFile = (selected: File) => {
     if (!selected.type.startsWith('image/')) {
       setError('Por favor selecciona una imagen')
       return
@@ -94,7 +111,7 @@ export function PhotoUpload({ user, onPhotoAdded }: PhotoUploadProps) {
       {error && <div className="upload-error">{error}</div>}
 
       {!preview ? (
-        <div className="upload-area">
+        <div className="upload-area" onDrop={handleDrop} onDragOver={handleDragOver}>
           <input
             type="file"
             accept="image/*"
